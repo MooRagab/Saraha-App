@@ -5,7 +5,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, "./config/.env") });
 import express from "express";
 import * as indexRouter from "./src/index.router.js";
-import connectDB from "./DB/connection.js";
+import connectDB from "./src/DB/connection.js";
 const app = express();
 app.use(express.json());
 const port = 3000;
@@ -22,3 +22,4 @@ app.use("*", (req, res) => {
 });
 
 app.listen(port, () => console.log("Ez to Go"));
+ 
