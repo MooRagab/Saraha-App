@@ -7,7 +7,7 @@ import {
   updatePassword,
   uploadProfilePic,
   userMessage,
-} from "./controller/user.js";
+} from "./controller/userController.js";
 import * as validators from "./user.validation.js";
 import { HME, multerValidation, myMulter } from "../../services/multer.js";
 

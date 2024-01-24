@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as validators from "./auth.validation.js";
+import * as validators from "./admin.validation.js";
 import {
   confirmEmail,
   signIn,
@@ -7,7 +7,7 @@ import {
   sendCode,
   forgetPassword,
   refreshEmailConfirmation,
-} from "./controller/register.js";
+} from "./controller/registerController.js";
 import { validation } from "../../middleware/validation.js";
 
 const router = Router();

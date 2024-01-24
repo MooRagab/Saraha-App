@@ -4,7 +4,7 @@ import {
   messagesList,
   sendMessages,
   softDeleteMessages,
-} from "./controller/message.js";
+} from "./controller/messageController.js";
 import * as valdators from "./messages.validation.js";
 import { auth } from "../../middleware/auth.js";
 import { validation } from "../../middleware/validation.js";
