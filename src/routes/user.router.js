@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { auth } from "../../middleware/auth.js";
-import { validation } from "../../middleware/validation.js";
+import { auth } from "../middleware/auth.js";
+import { validation } from "../middleware/validation.js";
 import {
   getShareProfile,
   profile,
@@ -8,8 +8,8 @@ import {
   uploadProfilePic,
   userMessage,
 } from "./controller/userController.js";
-import * as validators from "./user.validation.js";
-import { HME, multerValidation, myMulter } from "../../services/multer.js";
+import * as validators from "../validation/user.validation.js";
+import { HME, multerValidation, myMulter } from "../services/multer.js";
 
 const router = Router();
 router.patch(

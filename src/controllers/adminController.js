@@ -1,8 +1,8 @@
-import { userModel } from "../../../DB/models/user.model.js";
+import { userModel } from "../DB/models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { nanoid } from "nanoid";
-import { myEmail } from "../../../services/email.js";
+import { myEmail } from "../services/email.js";
 
 export const signUp = async (req, res) => {
   const { userName, email, password } = req.body;

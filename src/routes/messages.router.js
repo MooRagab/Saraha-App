@@ -5,9 +5,9 @@ import {
   sendMessages,
   softDeleteMessages,
 } from "./controller/messageController.js";
-import * as valdators from "./messages.validation.js";
-import { auth } from "../../middleware/auth.js";
-import { validation } from "../../middleware/validation.js";
+import * as valdators from "../validation/messages.validation.js";
+import { auth } from "../middleware/auth.js";
+import { validation } from "../middleware/validation.js";
 
 const router = Router();
 

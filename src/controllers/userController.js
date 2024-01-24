@@ -1,7 +1,7 @@
-import { messagesModel } from "../../../DB/models/messages.model.js";
-import { userModel } from "../../../DB/models/user.model.js";
+import { messagesModel } from "../DB/models/messages.model.js";
+import { userModel } from "../DB/models/user.model.js";
 import bcrypt from "bcrypt";
-import cloudinary from "../../../services/cloudinary.js";
+import cloudinary from "../services/cloudinary.js";
 
 export const profile = async (req, res) => {
   const user = await userModel.findById(req.user._id);
