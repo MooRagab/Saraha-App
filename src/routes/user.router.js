@@ -7,21 +7,21 @@ import {
   updatePassword,
   uploadProfilePic,
   userMessage,
-} from "./controller/userController.js";
+} from "../controllers/userController.js";
 import * as validators from "../validation/user.validation.js";
-import { HME, multerValidation, myMulter } from "../services/multer.js";
+import { fileValidation, myMulter } from "../services/multer.js";
 
 const router = Router();
+
+router.use(auth());
+router.get("/profile/share/:id", getShareProfile);
 router.patch(
   "/profile/pic",
-  auth(),
-  myMulter(multerValidation.image).single("image"),
-  HME,
+  myMulter(fileValidation.image).single("image"),
   uploadProfilePic
 );
-router.get("/profile", validation(validators.checkToken), auth(), profile);
-router.get("/messages", validation(validators.checkToken), auth(), userMessage);
-router.get("/profile/share/:id", getShareProfile);
-router.patch("/password", auth(), updatePassword);
+router.get("/profile", validation(validators.checkToken), profile);
+router.get("/messages", validation(validators.checkToken), userMessage);
+router.patch("/password", updatePassword);
 
 export default router;

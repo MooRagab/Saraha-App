@@ -7,7 +7,7 @@ import {
   sendCode,
   forgetPassword,
   refreshEmailConfirmation,
-} from "./controller/registerController.js";
+} from "../controllers/adminController.js";
 import { validation } from "../middleware/validation.js";
 
 const router = Router();

@@ -1,17 +1,21 @@
-import nodeoutlook from "nodejs-nodemailer-outlook";
+import nodemailer from 'nodemailer'
 
-export function myEmail(dest, subject, message) {
-  nodeoutlook.sendEmail({
+export async function sendEmail(dest, subject, message, attachments = []) {
+  let transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    secure: true,
     auth: {
-      user: process.env.senderEmail,
-      pass: process.env.senderEmailPassword,
+      user: process.env.NODEMAILEREMAIL,
+      pass: process.env.NODEMAILERPASSWORD,
     },
-    from: process.env.senderEmail,
+  })
+
+  let info = await transporter.sendMail({
+    from: `"RAGAB" <${process.env.NODEMAILEREMAIL}>`,
     to: dest,
     subject,
     html: message,
-
-    onError: (e) => console.log(e),
-    onSuccess: (i) => console.log(i),
-  });
+    attachments,
+  })
+  return info
 }

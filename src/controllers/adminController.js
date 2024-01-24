@@ -2,7 +2,7 @@ import { userModel } from "../DB/models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { nanoid } from "nanoid";
-import { myEmail } from "../services/email.js";
+import { sendEmail } from "../services/email.js";
 
 export const signUp = async (req, res) => {
   const { userName, email, password } = req.body;
@@ -26,7 +26,7 @@ export const signUp = async (req, res) => {
     const rfToken = jwt.sign({ id: savedUser._id }, process.env.emailToken);
     const link = `${req.protocol}://${req.headers.host}${process.env.BASEURL}/auth/confirmEmail/${token}`;
     const linkRf = `${req.protocol}://${req.headers.host}${process.env.BASEURL}/auth/refToken/${rfToken}`;
-    myEmail(
+    sendEmail(
       email,
       "ConfirmationEmail",
       `<a href = '${link}'>Follow Me To Confirm your Acc</a> <br> 
