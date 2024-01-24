@@ -1,7 +1,10 @@
+import path from "path";
+import { fileURLToPath } from "url";
 import dotenv from "dotenv";
-dotenv.config();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(__dirname, "./config/.env") });
 import express from "express";
-import * as indexRouter from "./modules/index.router.js";
+import * as indexRouter from "./src/index.router.js";
 import connectDB from "./DB/connection.js";
 const app = express();
 app.use(express.json());
