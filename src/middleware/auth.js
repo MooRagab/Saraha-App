@@ -8,11 +8,11 @@ export const auth = () => {
 
       // console.log(authorization);
 
-      if (!authorization?.startsWith(process.env.BearerKey)) {
+      if (!authorization?.startsWith(process.env.BEARER_KEY)) {
         res.json({ message: "In-Valid Bareaer Key" });
       } else {
-        const token = authorization.split(process.env.BearerKey)[1];
-        const decoded = jwt.verify(token, process.env.loginToken);
+        const token = authorization.split(process.env.BEARER_KEY)[1];
+        const decoded = jwt.verify(token, process.env.SIGNIN_TOKEN);
         if (!decoded?.id) {
           res.json({ message: "Invalid token payload" });
         } else {

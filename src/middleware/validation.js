@@ -8,7 +8,7 @@ export const validation = (schema) => {
         // console.log(key);
         const validationResult = schema[key].validate(req[key], {
           abortEarly: false,
-        });
+        }); 
         if (validationResult?.error?.details) {
           validationArr.push(validationResult.error.details);
         }

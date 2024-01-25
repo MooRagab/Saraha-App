@@ -1,5 +1,5 @@
 import { messagesModel } from "../DB/models/messages.model.js";
-import { userModel } from "../DB/models/user.model.js";
+import { userModel } from "../DB/models/user.model.js";                  
 
 export const messagesList = async (req, res) => {
   const message = await messagesModel.find({ isDeleted: false }).populate([

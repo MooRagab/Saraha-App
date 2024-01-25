@@ -31,7 +31,7 @@ export const updatePassword = async (req, res) => {
     } else {
       const newHash = await bcrypt.hash(
         newPassword,
-        parseInt(process.env.saltRound)
+        parseInt(process.env.SALT_ROUND)
       );
       const updatedUser = await userModel.updateOne(
         { _id: user._id },

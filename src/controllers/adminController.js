@@ -12,7 +12,7 @@ export const signUp = async (req, res) => {
   } else {
     const hashPassword = await bcrypt.hash(
       password,
-      parseInt(process.env.saltRound)
+      parseInt(process.env.SALT_ROUND)
     );
     const neswUser = new userModel({
       email,
@@ -20,12 +20,12 @@ export const signUp = async (req, res) => {
       password: hashPassword,
     });
     const savedUser = await neswUser.save();
-    const token = jwt.sign({ id: savedUser._id }, process.env.emailToken, {
+    const token = jwt.sign({ id: savedUser._id }, process.env.EMAIL_TOKEN, {
       expiresIn: 60 * 60,
     });
-    const rfToken = jwt.sign({ id: savedUser._id }, process.env.emailToken);
-    const link = `${req.protocol}://${req.headers.host}${process.env.BASEURL}/auth/confirmEmail/${token}`;
-    const linkRf = `${req.protocol}://${req.headers.host}${process.env.BASEURL}/auth/refToken/${rfToken}`;
+    const rfToken = jwt.sign({ id: savedUser._id }, process.env.EMAIL_TOKEN);
+    const link = `${req.protocol}://${req.headers.host}${process.env.BASE_URL}/auth/confirmEmail/${token}`;
+    const linkRf = `${req.protocol}://${req.headers.host}${process.env.BASE_URL}/auth/refToken/${rfToken}`;
     sendEmail(
       email,
       "ConfirmationEmail",
@@ -44,7 +44,7 @@ export const confirmEmail = async (req, res) => {
     if (!token) {
       res.json({ message: "In-valid Token" });
     } else {
-      const decoded = jwt.verify(token, process.env.emailToken);
+      const decoded = jwt.verify(token, process.env.EMAIL_TOKEN);
       if (!decoded?.id) {
         res.json({ message: "In-valid token payload " });
       } else {
@@ -77,7 +77,7 @@ export const signIn = async (req, res) => {
       } else {
         const token = jwt.sign(
           { id: user._id, isloggedIn: true },
-          process.env.loginToken
+          process.env.SIGNIN_TOKEN
         );
         await userModel.updateOne({ _id: user._id }, { online: true });
         res.json({ message: "Done", token });
@@ -94,7 +94,7 @@ export const sendCode = async (req, res) => {
   } else {
     const code = nanoid();
     // const code = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
-    myEmail(email, "Forget Password", `<h1>Access Code : ${code}</h1>`);
+    sendEmail(email, "Forget Password", `<h1>Access Code : ${code}</h1>`);
     const updatedUser = await userModel.updateOne(
       { _id: user._id },
       { code: code }
@@ -112,7 +112,7 @@ export const forgetPassword = async (req, res) => {
   } else {
     const hashPassword = await bcrypt.hash(
       newPassword,
-      parseInt(process.env.saltRound)
+      parseInt(process.env.SALT_ROUND)
     );
     const user = await userModel.updateOne(
       { email, code },
@@ -126,7 +126,7 @@ export const forgetPassword = async (req, res) => {
 
 export const refreshEmailConfirmation = async (req, res) => {
   const { token } = req.params;
-  const decoded = jwt.verify(token, process.env.emailToken);
+  const decoded = jwt.verify(token, process.env.EMAIL_TOKEN);
   if (!decoded?.id) {
     res.json({ message: "In-Valid Token PayLoad" });
   } else {
@@ -139,11 +139,11 @@ export const refreshEmailConfirmation = async (req, res) => {
       if (user.confirmEmail) {
         res.json({ message: "Already Confirmed" });
       } else {
-        const token = jwt.sign({ id: user._id }, process.env.emailToken, {
+        const token = jwt.sign({ id: user._id }, process.env.EMAIL_TOKEN, {
           expiresIn: 60 * 5,
         });
 
-        const link = `${req.protocol}://${req.headers.host}${process.env.BASEURL}/auth/confirmEmail/${token}`;
+        const link = `${req.protocol}://${req.headers.host}${process.env.BASE_URL}/auth/confirmEmail/${token}`;
 
         myEmail(
           user.email,
